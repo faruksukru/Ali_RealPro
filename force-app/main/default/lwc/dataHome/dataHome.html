@@ -1,0 +1,10 @@
+<template>
+    <lightning-accordion class="body-background" allow-multiple-sections-open active-section-name={activeSections}>
+        <lightning-accordion-section label="Leads" name="section1" onsectiontoggle={handleSectionToggle}>
+            <c-lead-bar-chart></c-lead-bar-chart>
+        </lightning-accordion-section>
+        <lightning-accordion-section label="Accounts" name="section2" onsectiontoggle={handleSectionToggle}>
+            <c-account-bar-chart></c-account-bar-chart>
+        </lightning-accordion-section>
+    </lightning-accordion>
+</template>

@@ -1,0 +1,11 @@
+.slds-modal__content {
+    min-height: 300px !important;
+}
+
+.columnBox {
+    margin-bottom: 2%; 
+    overflow:auto; 
+    max-height: 12rem;
+    border-style: groove;
+    border-width: 1.3px;
+}

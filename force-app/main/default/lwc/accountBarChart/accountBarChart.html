@@ -1,0 +1,116 @@
+<template>
+    <lightning-layout multiple-rows="true">
+        <template for:each={accountData} for:item="account">
+            <lightning-layout-item size="3" key={account.label} padding="around-small">
+                <a onclick={handleCardClick} data-id={account.label}>
+                <lightning-card title={account.label} variant="base" >
+                    <p class="slds-m-horizontal_small">
+                        <strong>Total Accounts:</strong> {account.count}
+                    </p>
+                </lightning-card>
+            </a>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+    <template if:true={isModalOpen}>
+    <section aria-modal="true" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container ">
+            <header class="slds-modal__header">
+                <h2 class="slds-modal__title">{accountSource}</h2>
+                <lightning-icon class="slds-modal__close slds-button_icon-inverse" icon-name="utility:close" size="small" onclick={closeModal}></lightning-icon>
+            </header>
+            <div class="slds-modal__content">
+                <template if:true={isProcessing}>
+                    <lightning-spinner alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
+                </template>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="6">
+                    <div class="slds-grid slds-gutters slds-wrap slds-p-left_medium slds-p-right_medium">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-radio-group name="radioGroup"
+                                data-id="channelSelect"
+                                label="Please choose a channel"
+                                options={options}
+                                value={channelSelected}
+                                onchange={handleChange}
+                                type="radio"></lightning-radio-group>
+                        </div>
+                    </div>
+                    </lightning-layout-item>
+
+                        <lightning-layout-item if:true={isEmail} size="12" padding="around-medium">
+                            <lightning-combobox data-id="templateSelect" name="Select Template" label="Select Template" placeholder="--Select--"
+                            options={templateOptions} onchange={handleChange}></lightning-combobox>
+                            <br/>
+                            <lightning-layout-item if:true={showFreeText} size="12" padding="around-medium">
+                                <lightning-input-rich-text data-id="freeText" required onchange={handleChange} value={freeText} label="Add Your Text Here" placeholder="type here..."></lightning-input-rich-text>
+                            </lightning-layout-item>
+                            <br/>
+                            Select Inventory
+                            <div class="columnBox">
+                                <template if:true={columnOptions}>
+                                    <lightning-input
+                                        name="enter-search"
+                                        label=""
+                                        variant="label-hidden"
+                                        type="search"
+                                        placeholder="Enter items"
+                                        class="slds-p-bottom_x-small"
+                                        onchange={handleSearch}
+                                        max-length="255">
+                                    </lightning-input>
+                                    <table class="slds-table slds-table_cell-buffer slds-table_fixed-layout">
+                                        <thead>
+                                            <template if:false={searchTerm}>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col">
+                                                        <lightning-input type="checkbox" label="Select All"
+                                                            checked={allColumnSelected}
+                                                            onchange={handleColumnCheckboxSelectionAll}></lightning-input>
+                                                    </th>
+                                                </tr>
+                                            </template>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={columnOptions} for:item="item" for:index="Name">
+                                                <template if:true={item.isVisible}>
+                                                    <tr key={item.Name}>
+                                                        <td scope="col">
+                                                            <lightning-input type="checkbox" id={item.Name} name={item.Name}
+                                                                label={item.Name} checked={item.isSelected}
+                                                                onchange={handleColumnCheckboxSelection}></lightning-input>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                    <template if:true={isDisplayNoRecords}>
+                                        <div class="slds-align_absolute-center">
+                                            <br/>
+                                            No matches found
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item if:false={isEmail} size="12" padding="around-medium">
+                        <lightning-input-rich-text data-id="message" required onchange={handleChange} value={message} label="Add Your Message Here" placeholder="type here..."></lightning-input-rich-text>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={closeModal} class="slds-p-around_x-small"></lightning-button>
+                    <lightning-button type="submit" variant="brand" label="Send" onclick={handleSend}></lightning-button> 
+            </footer>        
+        </div>
+
+        <div if:true={showSpinner} data-id="c-spinner">
+            <lightning-spinner variant="brand" alternative-text="submitting..." size="medium">
+            </lightning-spinner>
+        </div>
+                    
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

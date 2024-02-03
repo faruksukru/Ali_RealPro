@@ -1,0 +1,126 @@
+<apex:component controller="NDAVerifiedEmailController" access="global">
+    <apex:attribute name="propertyId" description="This is the value for the component."
+                    type="Id" assignTo="{!property}"/>
+    <div style="background-image: linear-gradient(to bottom, #F0F0F0, white);">
+        <div>
+            <center>
+                <apex:image id="theImage" value="{!properties.Street_view__c}" width="600" height="200"/>
+            </center>
+        </div>
+        <div> 
+            <div id="propertyDescHeader" style="margin:20px; clear: both;">
+                <h2>Property Description</h2>
+                <div id="propertyDesc">
+                    {!properties.Description__c}
+                </div>
+            </div>
+            <div id="propertyInfoHeader" style="margin:20px; clear: both;">
+                <h2>Property Information</h2>
+                <div id="propertyInfo">
+                    <table style="float:left; width:48%; text-align:left; border-collapse: collapse; margin-bottom: 30px;">
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Status</th>
+                            <td style="font-weight:bold;">{!properties.Status__c}</td>
+                        </tr>
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Listing Status</th>
+                            <td style="font-weight:bold;">{!properties.Listing_Status__c}</td>
+                        </tr>
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Legal Description</th>
+                            <td style="font-weight:bold;">{!properties.LegalDescription__c}</td>
+                        </tr>
+                    </table>
+                    <table style="float:right; width:48%; text-align:left; border-collapse: collapse; margin-bottom: 30px;">
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Subdivision</th>
+                            <td style="font-weight:bold;">{!properties.Subdivision__c}</td>
+                        </tr>
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Assessed Value</th>
+                            <td style="font-weight:bold;">{!properties.AssessedValue__c}</td>
+                        </tr>
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Property Type</th>
+                            <td style="font-weight:bold;">{!properties.PropertyType__c}</td>
+                        </tr>
+                    </table>
+                    <!--<p>Status : {!properties.Status__c}</p>
+<p>Listing Status : {!properties.Listing_Status__c}</p>
+<p>Legal Description : {!properties.LegalDescription__c}</p>
+<p>Subdivision : {!properties.Subdivision__c}</p>
+<p>Assessed Value : {!properties.AssessedValue__c}</p>
+<p>Property Type : {!properties.PropertyType__c}</p>-->
+                    
+                </div>
+            </div>
+            <div id="propertyFinancialHeader" style="margin:20px; clear: both;">
+                <h2>Property Financial Summary</h2>
+                <div id="propertyFinancial">
+                    <table style="float:left; width:48%; text-align:left; border-collapse: collapse; margin-bottom: 30px;">
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Financial Summary Type</th>
+                            <td style="font-weight:bold;">{!properties.FinancialSummaryType__c}</td>
+                        </tr>
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Sales Price</th>
+                            <td style="font-weight:bold;">{!properties.SalesPrice__c}</td>
+                        </tr>
+                    </table>
+                    <table style="float:right; width:48%; text-align:left; border-collapse: collapse; margin-bottom: 30px;">
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Estimated Rehab</th>
+                            <td style="font-weight:bold;">{!properties.EstimatedRehab__c}</td>
+                        </tr>
+                        <tr style="border-bottom: 0.5px dashed grey;">
+                            <th style="font-weight:normal;">Total Investment</th>
+                            <td style="font-weight:bold;">{!properties.TotalInvestment__c}</td>
+                        </tr>
+                    </table>
+                    <!--Financial Summary Type : {!properties.FinancialSummaryType__c}
+Sales Proce : {!properties.SalesPrice__c}
+Estimated Rehab : {!properties.EstimatedRehab__c}
+Total Investment : {!properties.TotalInvestment__c}-->
+                </div>
+            </div>
+            <div id="propertyIncomeandExpenseHeader" style="margin:20px; clear: both;">
+                <h2>Property Incomes and Expenses</h2>
+                <div id="propertyIncomeandExpense">
+                    <table style="float:left; width:48%; text-align:left; border-collapse: collapse; margin-bottom: 30px;">
+                        <tr>
+                            <th style="padding-bottom: 10px;">Income</th>
+                        </tr>
+                        <apex:repeat value="{!propIncomes}" var="att">
+                            <tr style="border-bottom: 0.5px dashed grey; font-weight:bold;">
+                                {!att.Unit_Name__c}
+                            </tr>
+                            <tr style="border-bottom: 0.5px dashed grey;">
+                                <th style="font-weight:normal;">{!att.Bedrooms__c} bed/{!att.Bathrooms__c} bath</th>
+                                <td style="font-weight:bold;">${!att.MonthlyRent__c}/month</td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                    <table style="float:right; width:48%; text-align:left; border-collapse: collapse; margin-bottom: 30px;">
+                        <tr>
+                            <th style="padding-bottom: 10px;">Expense</th>
+                        </tr>
+                        <apex:repeat value="{!propExpences}" var="att">
+                            <tr style="border-bottom: 0.5px dashed grey;">
+                                <th style="font-weight:normal;">{!att.ExpenseType__c}</th>
+                                <td style="font-weight:bold;">${!att.MonthlyExpense__c}/month</td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </div>
+            <div id="propertyQandAHeader" style="margin:20px; clear: both;">
+                <h2>Property Questions and Aswers</h2>
+                <div id="propertyDesc">
+                    <p><strong>Amazing investment!!&nbsp;</strong></p>
+                    <p>12 CBS homes located on 1.4 acres of beautiful land. Fully occupied. Great condition. Located in a populated area. MSA is home to over 400k+ people. Tons of business in the city. Nice restaurants and bars nearby. Minutes away from downtown. Very inexpensive to operate. Separate electric and gas meters. City water and sewer. <strong>15.21% NET RETURN ON INVESTMENT!!!!&nbsp;</strong>This property will not last.&nbsp;</p>
+                    <p>Financing and professional property management is available. Call us today!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</apex:component>
